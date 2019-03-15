@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
+    private SwipeRefreshLayout swipeRefreshLayout;
     private IntentFilter intentFilter;
 
     private List<Info> list = new ArrayList<>();
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setRefreshing(true);
         //设置下拉时圆圈的颜色（可以由多种颜色拼成）
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
@@ -46,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         //设置下拉时圆圈的背景颜色（这里设置成白色）
         swipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        swipeRefreshLayout.setRefreshing(false);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Log.d(TAG, "onRefresh: ");
+                refreshData();
             }
         });
 
@@ -57,6 +59,48 @@ public class MainActivity extends AppCompatActivity {
         initDatas();
         //初始化视图
         initViews();
+
+//        try {
+//            //模拟网络请求2s
+//            Thread.sleep(2000);
+//        }catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                headerBottomAdapter.notifyDataSetChanged();
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+
+    }
+
+    private void refreshData() {
+        Info info = new Info();
+        info.setContent("新的");
+        info.setTitle("新的标题");
+        list.add(info);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //模拟网络请求2s
+                    Thread.sleep(2000);
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        headerBottomAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
 
 
     }

@@ -79,6 +79,7 @@ public class HeaderBottomAdapter extends RecyclerView.Adapter <RecyclerView.View
         public HeaderViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.cv_header_imageView);
+
         }
     }
 
