@@ -1,7 +1,10 @@
 package com.example.coolweather.main.view;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +15,15 @@ import com.example.coolweather.MainContract;
 import com.example.coolweather.R;
 import com.example.coolweather.db.DaoUtils;
 import com.example.coolweather.db.Province;
+import com.example.coolweather.gson.Weather;
 import com.example.coolweather.main.bean.TemperatureBean;
 import com.example.coolweather.main.presenter.TemperaturePresenter;
 import com.example.coolweather.util.CallBackUtil;
 import com.example.coolweather.util.OkhttpUtil;
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -32,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private Button showTempBtn;
     private TextView tempContentext;
     private MainContract.Presenter mMainPresenter;
+    private Button toNextBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +48,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
 
         initGreenDao();
-        new TemperaturePresenter(this);
 
+        new TemperaturePresenter(this);
         showTempBtn = (Button)findViewById(R.id.btn_click);
         showTempBtn.setOnClickListener(this);
         tempContentext = (TextView)findViewById(R.id.lab_text);
 
+        toNextBtn = (Button)findViewById(R.id.to_next);
+        toNextBtn.setOnClickListener(this);
 
     }
 
@@ -64,6 +75,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         int celsius = temperatureBean.getDegree();
         String text = "presentTemperatureText : " + celsius;
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        String xxx ="xxx";
+        Weather weather = new Gson().fromJson(xxx,Weather.class);
+        List<List<Weather.ResultBean.DataListBean>> list = weather.getResult().getDataList();
+        List<Weather.ResultBean.DataListBean> beans = list.get(0);
+        Weather.ResultBean.DataListBean dataBean = beans.get(0);
+        dataBean.getIcon();
+        dataBean.getTitle();
+        dataBean.getType();
+
+
+
         tempContentext.setText(text);
     }
 
@@ -73,25 +95,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             case R.id.btn_click:
                 mMainPresenter.start();
                 break;
+            case R.id.to_next:
+                Intent intent = new Intent(this,MineActivity.class);
+
+                startActivity(intent);
+                break;
                 default:
         }
     }
 
-    private void testOKHttp() {
-        String url = "https://www.baidu.com";
-        OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
-            @Override
-            public void onFailure(Call call, Exception e) {
 
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Bundle bundle = data.getExtras();
+        String param = bundle.getString("param");
 
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: " + response);
+        Log.d(TAG, "onActivityResult: " + param);
+    }
 
-            }
+    private void mvpTest() {
 
-        });
     }
 
     private void testGreenDao() {
@@ -111,6 +134,42 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         });
 
     }
+
+    private void testThread() {
+         new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+
+                   }
+               });
+
+            }
+        }).start();
+
+    }
+
+    private void download() {
+
+        String url = "";
+
+        OkhttpUtil.okHttpDownloadFile(url, new CallBackUtil.CallBackFile("fileDir","fileName") {
+            @Override
+            public void onFailure(Call call, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(File response) {
+
+            }
+        });
+    }
+
+
 
 }
 

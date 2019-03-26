@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 //    private PersonCenterAdapter adapter;
     private HeaderBottomAdapter headerBottomAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+
+
+//    private PersonAdapter headerBottomAdapter;
     private int index = 0;
 
     @Override
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
 //        adapter = new PersonCenterAdapter(this,list);
+//        headerBottomAdapter = new PersonAdapter(R.layout.info_item,list);
         headerBottomAdapter = new HeaderBottomAdapter(this,list);
 
         //配置 layoutManager
@@ -118,19 +121,19 @@ public class MainActivity extends AppCompatActivity {
 
         //配置adapter
         recyclerView.setAdapter(headerBottomAdapter);
-        headerBottomAdapter.setOnItemClickListener(new HeaderBottomAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                    String toastText = "点击了" + position;
-                    Toast.makeText(getApplicationContext(),toastText,Toast.LENGTH_LONG).show();
-                    Info info = new Info();
-                    info.setTitle("地区"+index+1);
-                    info.setContent("详细地区"+index+1);
-                    list.set(position-1,info);
-//                    headerBottomAdapter.notifyItemChanged(position);
-                    headerBottomAdapter.updateData(list);
-            }
-        });
+//        headerBottomAdapter.setOnItemClickListener(new HeaderBottomAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                    String toastText = "点击了" + position;
+//                    Toast.makeText(getApplicationContext(),toastText,Toast.LENGTH_LONG).show();
+//                    Info info = new Info();
+//                    info.setTitle("地区"+index+1);
+//                    info.setContent("详细地区"+index+1);
+//                    list.set(position-1,info);
+////                    headerBottomAdapter.notifyItemChanged(position);
+//                    headerBottomAdapter.updateData(list);
+//            }
+//        });
 
         /**
          * 如果列表数据更新了，需调用更新方法，传入新的list

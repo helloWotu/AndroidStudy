@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:id="@+id/person_home"
+    >
+
+
+        <ImageView
+            android:id="@+id/icon_imageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/person_home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/icon_imageView"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:text="个人主页"
+            />
+
+        <ImageView
+            android:id="@+id/person_home_next"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dp_10"
+            android:src="@drawable/next_page"
+            android:layout_centerVertical="true"
+            />
+
+
+
+
+</RelativeLayout>

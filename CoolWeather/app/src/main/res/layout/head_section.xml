@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/head_imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/taylor"
+        android:paddingLeft="@dimen/dp_10"
+
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/head_imageView"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        >
+        <TextView
+            android:id="@+id/user_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_10"
+            android:text="请登录"
+            android:textSize="15sp"
+            />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/next_page"
+            android:paddingTop="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dp_10"
+            />
+        <TextView
+            android:id="@+id/attention_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_name_text"
+            android:layout_alignParentLeft="true"
+            android:text="关注：0"
+            android:textSize="10sp"
+            />
+        <TextView
+            android:id="@+id/fins_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/attention_text"
+            android:text="粉丝：0"
+            android:textSize="10sp"
+            />
+        <TextView
+            android:id="@+id/integral_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dp_10"
+            android:layout_alignTop="@+id/fins_text"
+            android:text="积分 0"
+            android:textSize="10sp"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

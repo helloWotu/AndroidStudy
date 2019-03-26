@@ -13,7 +13,6 @@ public class MyApplication extends Application {
         super.onCreate();
         mContext = getApplicationContext();
 
-
     }
 
     public static Context getmContext() {
