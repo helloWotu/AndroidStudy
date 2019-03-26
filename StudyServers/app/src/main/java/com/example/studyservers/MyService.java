@@ -14,7 +14,8 @@ public class MyService extends Service {
     private static final String TAG = MyService.class.toString();
     private Mybinder mybinder = new Mybinder();
 
-    public class Mybinder extends Binder {
+
+    private class Mybinder extends Binder implements Iservice{
         public MyService getService() {
             return MyService.this;
         }

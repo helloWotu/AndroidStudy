@@ -9,11 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.time.Year;
+
 public class MainActivity extends AppCompatActivity {
 
-
     private Myconn con;
-    private MyService.Mybinder mBinder;
+    private Iservice mBinder;
+    private boolean isBind; //记录一个bool变量，防止重复解绑
+    private MyService mService = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBinder.someMehold(100);
+//                mBinder.someMehold(100);
+                mService.callBanZheng(10000);
+
             }
         });
 
@@ -41,18 +46,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mBinder = (MyService.Mybinder) service;
+            mBinder = (Iservice) service;
+            isBind = true;
+            mService = mBinder.getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            isBind = false;
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(con);
+        if (isBind) {
+            unbindService(con);
+        }
     }
 }
