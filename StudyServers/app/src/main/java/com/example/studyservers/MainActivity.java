@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.time.Year;
-
 public class MainActivity extends AppCompatActivity {
 
     private Myconn con;
@@ -27,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         con = new Myconn();
         bindService(intent,con,BIND_AUTO_CREATE);
 
-
         Button btn = findViewById(R.id.call_zheng);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
