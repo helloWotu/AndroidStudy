@@ -1,8 +1,10 @@
 package com.example.wisdombeijing.Fragment;
 
 
+import android.util.Log;
 import android.view.View;
 import com.example.wisdombeijing.BaseFragment;
+import com.example.wisdombeijing.MainActivity;
 import com.example.wisdombeijing.R;
 
 public class HomeFragment extends BaseFragment {
@@ -16,7 +18,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initData() {
 
-
-
+        Log.d("HomeFragment", "HomeFragment initData: ");
     }
 }

@@ -37,9 +37,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //在这里初始化数据
-        initData();
-
+//        initData();
     }
 
     public abstract void initData();

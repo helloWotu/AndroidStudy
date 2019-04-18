@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG_MAIN_FRAGMENT = "main_fragment";
     private Toolbar toolbar;
+    private TextView titleTextV;
+    public  DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,15 +32,16 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        titleTextV = (TextView) findViewById(R.id.toolbar_title);
 
         //给 toolbar 设置导航剪头，并绑定 DrawLayout，在滑动的时候执行动画
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        toolbar.setTitle("RRRRRRR");
 
         /**
          * 给NavigationView的菜单设置点击事件,
@@ -46,8 +50,6 @@ public class MainActivity extends AppCompatActivity
          */
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
         initFragment();
     }
@@ -70,6 +72,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void setTitleTextV(TextView titleTextV) {
+        this.titleTextV = titleTextV;
+    }
+
+    public TextView getTitleTextV() {
+        return titleTextV;
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

@@ -2,19 +2,15 @@ package com.example.wisdombeijing;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import com.example.wisdombeijing.Fragment.GovmentFragment;
 import com.example.wisdombeijing.Fragment.HomeFragment;
 import com.example.wisdombeijing.Fragment.NewsFragment;
@@ -42,10 +38,11 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.rb_setting)
     RadioButton rb_setting;
     @BindView(R.id.content_viewPager)
-    ViewPager viewPager;
+    NoScrollViewPager mViewPager;
 
 
-
+    private ArrayList<Fragment> mPagers = new ArrayList<Fragment>();
+    private MainActivity mainActivity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,12 +60,74 @@ public class MainFragment extends BaseFragment {
         View view = View.inflate(mActivity, R.layout.main_fragment, null);
         ButterKnife.bind(this,view);
         setRadioButtonImg();
-
+        mainActivity = (MainActivity)mActivity;
         contentAdapter contentAdapter = new contentAdapter(getChildFragmentManager());
-        viewPager.setAdapter(contentAdapter);
+        mViewPager.setCanScoll(false);
+        mViewPager.setAdapter(contentAdapter);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
+                switch (checkedId){
+                    case R.id.rb_home:
+                       setToolTitle("首页");
+                        mViewPager.setCurrentItem(0,false);
+                        mainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        break;
+                    case R.id.rb_news:
+                        setToolTitle("新闻");
+                        mViewPager.setCurrentItem(1,false);
+                        mainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                        break;
+                    case R.id.rb_smart:
+                        setToolTitle("智慧");
+                        mViewPager.setCurrentItem(2,false);
+                        mainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        break;
+                    case R.id.rb_govaffairs:
+                        setToolTitle("政务");
+                        mViewPager.setCurrentItem(3,false);
+                        mainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        break;
+                    case R.id.rb_setting:
+                        setToolTitle("设置");
+                        mViewPager.setCurrentItem(4,false);
+                        mainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        break;
+                        default:
+
+                }
+
+            }
+
+        });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                BaseFragment fragment = (BaseFragment) mPagers.get(i);
+                fragment.initData();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
+        BaseFragment home_fragment = (BaseFragment) mPagers.get(0);
+        home_fragment.initData();
 
         return view;
+    }
+
+    private void setToolTitle(String title) {
+        mainActivity.getTitleTextV().setText(title);
     }
 
     @Override
@@ -80,7 +139,6 @@ public class MainFragment extends BaseFragment {
 
      class contentAdapter extends FragmentPagerAdapter {
 
-        private ArrayList<Fragment> mPagers = new ArrayList<Fragment>();
         public contentAdapter(FragmentManager fm) {
             super(fm);
             mPagers.add(new HomeFragment());
