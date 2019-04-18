@@ -1,6 +1,7 @@
 package com.example.wisdombeijing;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.os.Bundle;
@@ -62,15 +63,20 @@ public class SplashActivity extends Activity {
                 SharedPreferences sp = getSharedPreferences("config",MODE_PRIVATE);
                 String key = "is_first_enter";
                 boolean isfirstEnter = sp.getBoolean(key, true);
+
+                Intent intent;
                 if (isfirstEnter) {
+//                    sp.edit().putBoolean(key,false).commit();
                     //新手引导页面
+                    intent = new Intent(getApplicationContext(),GuideActivity.class);
 
                 }else {
                     //首页
-                    sp.edit().putBoolean(key,false);
+                    intent = new Intent(getApplicationContext(),MainActivity.class);
 
                 }
-
+                startActivity(intent);
+                finish();
             }
 
             @Override
