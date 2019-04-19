@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.example.wisdombeijing.BaseFragment;
 import com.example.wisdombeijing.R;
 import com.example.wisdombeijing.Unit.CallBackUtil;
+import com.example.wisdombeijing.Unit.GlobalConstants;
 import com.example.wisdombeijing.Unit.OkhttpUtil;
 
 import okhttp3.Call;
@@ -28,7 +29,7 @@ public class NewsFragment extends BaseFragment {
 
     private void getNetworkData() {
 
-        final String url = "https://www.baidu.com/";
+        final String url = GlobalConstants.CATEGORY_URL;
         OkhttpUtil.okHttpGet(url, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -42,6 +43,5 @@ public class NewsFragment extends BaseFragment {
         });
 
     }
-
 
 }
