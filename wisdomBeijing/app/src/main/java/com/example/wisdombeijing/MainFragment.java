@@ -1,16 +1,22 @@
 package com.example.wisdombeijing;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.example.wisdombeijing.Fragment.ContentAdapter;
+import com.example.wisdombeijing.Fragment.GalleryFragment;
 import com.example.wisdombeijing.Fragment.GovmentFragment;
 import com.example.wisdombeijing.Fragment.HomeFragment;
 import com.example.wisdombeijing.Fragment.NewsFragment;
@@ -41,8 +47,9 @@ public class MainFragment extends BaseFragment {
     NoScrollViewPager mViewPager;
 
 
-    private ArrayList<Fragment> mPagers = new ArrayList<Fragment>();
+    private ArrayList<BaseFragment> mPagers = new ArrayList<BaseFragment>();
     private MainActivity mainActivity;
+    private ContentAdapter contentAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +60,13 @@ public class MainFragment extends BaseFragment {
     }
 
 
+    public ArrayList<BaseFragment> getPagers() {
+        return mPagers;
+    }
+
+    public ContentAdapter getContentAdapter() {
+        return contentAdapter;
+    }
 
     @Override
     public View initView() {
@@ -61,7 +75,9 @@ public class MainFragment extends BaseFragment {
         ButterKnife.bind(this,view);
         setRadioButtonImg();
         mainActivity = (MainActivity)mActivity;
-        contentAdapter contentAdapter = new contentAdapter(getChildFragmentManager());
+        contentAdapter = new ContentAdapter(getChildFragmentManager(),mActivity);
+        initData();
+        contentAdapter.setLists(mPagers);
         mViewPager.setCanScoll(false);
         mViewPager.setAdapter(contentAdapter);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -78,6 +94,15 @@ public class MainFragment extends BaseFragment {
                         setToolTitle("新闻");
                         mViewPager.setCurrentItem(1,false);
                         mainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+                        BaseFragment getFragment = (BaseFragment) contentAdapter.getItem(1);
+                        if (!(getFragment instanceof NewsFragment)) {
+
+                            mPagers.set(1,new NewsFragment());
+                            contentAdapter.setLists(mPagers);
+                            contentAdapter.notifyDataSetChanged();
+                        }
+
                         break;
                     case R.id.rb_smart:
                         setToolTitle("智慧");
@@ -133,32 +158,17 @@ public class MainFragment extends BaseFragment {
     @Override
     public void initData() {
 
+        mPagers.add(new HomeFragment());
+        mPagers.add(new NewsFragment());
+        mPagers.add(new SmartFragment());
+        mPagers.add(new GovmentFragment());
+        mPagers.add(new SettingFragment());
 
     }
 
 
-     class contentAdapter extends FragmentPagerAdapter {
 
-        public contentAdapter(FragmentManager fm) {
-            super(fm);
-            mPagers.add(new HomeFragment());
-            mPagers.add(new NewsFragment());
-            mPagers.add(new SmartFragment());
-            mPagers.add(new GovmentFragment());
-            mPagers.add(new SettingFragment());
 
-        }
-
-        @Override
-        public int getCount() {
-            return mPagers.size();
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            return mPagers.get(i);
-        }
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

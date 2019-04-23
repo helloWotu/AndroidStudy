@@ -17,6 +17,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wisdombeijing.Fragment.GalleryFragment;
+import com.example.wisdombeijing.Fragment.NewsFragment;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -89,7 +94,18 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
             Toast.makeText(getApplicationContext(),"nav_camera",Toast.LENGTH_LONG).show();
+
         } else if (id == R.id.nav_gallery) {
+
+            FragmentManager fm = getSupportFragmentManager();
+
+            MainFragment mainFragment = (MainFragment) fm.findFragmentByTag(TAG_MAIN_FRAGMENT);
+
+            ArrayList<BaseFragment> mPages = mainFragment.getPagers();
+            mPages.set(1,new GalleryFragment());
+
+           mainFragment.getContentAdapter().setLists(mPages);
+           mainFragment.getContentAdapter().notifyDataSetChanged();
 
         } else if (id == R.id.nav_slideshow) {
 

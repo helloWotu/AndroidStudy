@@ -23,9 +23,17 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = initView();
 
-        return view;
+        if (container == null) {
+            return null;
+        }else  {
+            View view = initView();
+
+            return view;
+        }
+
+
+
     }
 
     public abstract View initView();

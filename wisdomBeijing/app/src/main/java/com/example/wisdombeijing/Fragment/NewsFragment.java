@@ -4,10 +4,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.example.wisdombeijing.BaseFragment;
+import com.example.wisdombeijing.Bean.NewsMenu;
 import com.example.wisdombeijing.R;
 import com.example.wisdombeijing.Unit.CallBackUtil;
 import com.example.wisdombeijing.Unit.GlobalConstants;
 import com.example.wisdombeijing.Unit.OkhttpUtil;
+import com.google.gson.Gson;
 
 import okhttp3.Call;
 
@@ -24,7 +26,7 @@ public class NewsFragment extends BaseFragment {
     public void initData() {
         Log.d("NewsFragment", "NewsFragment initData: ");
 
-        getNetworkData();
+//        getNetworkData();
     }
 
     private void getNetworkData() {
@@ -38,7 +40,10 @@ public class NewsFragment extends BaseFragment {
 
             @Override
             public void onResponse(String response) {
-                Toast.makeText(mActivity,response,Toast.LENGTH_SHORT).show();
+                NewsMenu mNewsMenu = new Gson().fromJson(response, NewsMenu.class);
+
+
+
             }
         });
 
