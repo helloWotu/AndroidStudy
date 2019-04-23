@@ -1,14 +1,7 @@
 package com.example.wisdombeijing;
-
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -16,7 +9,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.wisdombeijing.Fragment.ContentAdapter;
-import com.example.wisdombeijing.Fragment.GalleryFragment;
 import com.example.wisdombeijing.Fragment.GovmentFragment;
 import com.example.wisdombeijing.Fragment.HomeFragment;
 import com.example.wisdombeijing.Fragment.NewsFragment;

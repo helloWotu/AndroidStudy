@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity
            mainFragment.getContentAdapter().setLists(mPages);
            mainFragment.getContentAdapter().notifyDataSetChanged();
 
+           titleTextV.setText("Gallery");
+
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
