@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     >
-    <com.example.myapplication.Units.SingleBall
+    <com.example.myapplication.loading.SingleBall
         android:id="@+id/ball_one"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -13,28 +13,28 @@
         android:layout_marginLeft="50dp"
         />
 
-    <com.example.myapplication.Units.SingleBall
+    <com.example.myapplication.loading.SingleBall
         android:id="@+id/ball_two"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
         />
 
-    <com.example.myapplication.Units.SingleBall
+    <com.example.myapplication.loading.SingleBall
         android:id="@+id/ball_three"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
         />
 
-    <com.example.myapplication.Units.SingleBall
+    <com.example.myapplication.loading.SingleBall
         android:id="@+id/ball_four"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
         />
 
-    <com.example.myapplication.Units.SingleBall
+    <com.example.myapplication.loading.SingleBall
         android:id="@+id/ball_five"
         android:layout_width="20dp"
         android:layout_height="20dp"

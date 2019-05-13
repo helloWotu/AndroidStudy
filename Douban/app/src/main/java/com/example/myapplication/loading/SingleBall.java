@@ -1,11 +1,11 @@
-package com.example.myapplication.Units;
+package com.example.myapplication.loading;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -17,8 +17,6 @@ public class SingleBall extends View {
     private Paint mPaint;
     private int width;
     private int height;
-
-
 
     public SingleBall(Context context) {
         super(context);

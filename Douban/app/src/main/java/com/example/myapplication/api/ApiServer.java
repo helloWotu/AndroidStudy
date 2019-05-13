@@ -1,34 +1,27 @@
 package com.example.myapplication.api;
 
 
-import com.example.myapplication.bean.zhuantiList;
+import com.example.myapplication.bean.MovieData;
+import com.example.myapplication.bean.Movieinfo;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Streaming;
-import retrofit2.http.Url;
+import retrofit2.http.Query;
+
 
 public interface ApiServer {
 
-    @GET("zhbj/10002/list_1")
-    Observable<zhuantiList.DataBean> getlist();
 
+    @GET("/v2/movie/us_box")
+    Observable<Movieinfo> getHotMovie();
 
-    @Streaming
-    @GET
-    /**
-     * 大文件官方建议用 @Streaming 来进行注解，不然会出现IO异常，小文件可以忽略不注入
-     */
-    Observable<ResponseBody> downloadFile(@Url String fileUrl);
+    @GET("/v2/movie/in_theaters")
+    Observable<MovieData> getInTheaters();
 
-    @Multipart
-    @POST("user/register.do")
-    Observable<String> register(@Part("phone") RequestBody phone, @Part("password") RequestBody password, @Part MultipartBody.Part image);
+    @GET("/v2/movie/coming_soon")
+    Observable<MovieData> getComingSoon();
+
+    @GET("/v2/movie/top250")
+    Observable<MovieData> getTop250(@Query("start")int start,@Query("count")int count);
 
 }

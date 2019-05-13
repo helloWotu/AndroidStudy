@@ -2,7 +2,7 @@ package com.example.myapplication.presenter;
 
 import com.example.myapplication.base.BaseObserver;
 import com.example.myapplication.base.BasePresenter;
-import com.example.myapplication.bean.zhuantiList;
+import com.example.myapplication.bean.MovieData;
 import com.example.myapplication.view.MainView;
 
 public class MainPresenter extends BasePresenter<MainView> {
@@ -13,10 +13,10 @@ public class MainPresenter extends BasePresenter<MainView> {
 
 
     public void getDataList() {
-        addDisposable(apiServer.getlist(), new BaseObserver<zhuantiList.DataBean>(baseView) {
 
+        addDisposable(apiServer.getInTheaters(), new BaseObserver<MovieData>(baseView) {
             @Override
-            public void onSuccess(zhuantiList.DataBean o) {
+            public void onSuccess(MovieData o) {
                 baseView.onGetSuccse(o);
             }
 

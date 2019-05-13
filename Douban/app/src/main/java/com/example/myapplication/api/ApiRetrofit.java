@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 
 public class ApiRetrofit {
 
-    public final String BASE_SERVER_URL = "http://192.168.8.138/";
+    public final String BASE_SERVER_URL = IPAddress.BASEURL;
 
     private static ApiRetrofit apiRetrofit;
     private Retrofit retrofit;

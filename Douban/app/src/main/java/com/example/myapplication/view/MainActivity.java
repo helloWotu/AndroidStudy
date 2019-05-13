@@ -1,26 +1,28 @@
 package com.example.myapplication.view;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import androidx.annotation.NonNull;
+
+import com.example.myapplication.view.home.HomeFragment;
+import com.example.myapplication.view.hot.HotFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
 import com.example.myapplication.R;
-import com.example.myapplication.Units.Myloading;
+import com.example.myapplication.bean.MovieData;
+import com.example.myapplication.loading.Myloading;
 import com.example.myapplication.base.BaseActivity;
-import com.example.myapplication.bean.zhuantiList;
 import com.example.myapplication.presenter.MainPresenter;
 
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainView, View.OnClickListener {
 
-    private TextView mTextMessage;
     private Myloading mMyloading;
-    private Button start_ani_button;
-    private Button end_ani_button;
-    private Button get_data_button;
 
+    private static final String TAG_HOME_FRAGMENT = "home_fragment";
+    private static final String TAG_HOT_FRAGMENT = "hot_fragment";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -29,13 +31,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+
+                    initHomeFragment();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    initHotFragment();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+
                     return true;
             }
             return false;
@@ -43,45 +46,35 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     };
 
 
-    private void getlist() {
-
-
-
-    }
-
     @Override
     public void initView() {
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        initHomeFragment();
+
         mMyloading = (Myloading)findViewById(R.id.ball_single);
-        start_ani_button = (Button) findViewById(R.id.star_ball);
-        end_ani_button = (Button)findViewById(R.id.end_ball);
-        get_data_button = (Button)findViewById(R.id.getData);
 
-        start_ani_button.setOnClickListener(this);
-        end_ani_button.setOnClickListener(this);
-        get_data_button.setOnClickListener(this);
+    }
 
+    private void initHomeFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.main_views,new HomeFragment(),TAG_HOME_FRAGMENT);
+        transaction.commit();
+    }
 
+    private void initHotFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.main_views,new HotFragment(),TAG_HOT_FRAGMENT);
+        transaction.commit();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.star_ball:
-                mMyloading.start();
-                break;
 
-            case R.id.end_ball:
-                mMyloading.stop();
-                break;
-
-            case R.id.getData:
-                presenter.getDataList();
-                break;
-                default:break;
         }
     }
 
@@ -96,7 +89,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     }
 
     @Override
-    public void onGetSuccse(zhuantiList.DataBean dataBean) {
+    public void onGetSuccse(MovieData dataBean) {
         showtoast("获取成功:" + dataBean.getTitle());
     }
 }
